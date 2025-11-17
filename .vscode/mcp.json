@@ -1,0 +1,12 @@
+{
+  "servers": {
+    "secure-rolldice": {
+      "type": "http",
+      "url": "https://your-secure-rolldice.vercel.app/api/mcp"
+    },
+    "secure-rolldice-local": {
+      "type": "http", 
+      "url": "http://localhost:3002/api/mcp"
+    }
+  }
+}
