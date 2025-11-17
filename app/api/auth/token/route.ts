@@ -5,7 +5,6 @@ export async function POST(request: NextRequest) {
     const body = await request.formData();
     const grantType = body.get('grant_type');
     const code = body.get('code');
-    const codeVerifier = body.get('code_verifier');
 
     if (grantType !== 'authorization_code') {
       return NextResponse.json(
@@ -42,14 +41,14 @@ export async function POST(request: NextRequest) {
         expires_in: 3600,
         scope: 'openid profile email'
       });
-    } catch (error) {
+    } catch {
       return NextResponse.json(
         { error: 'invalid_grant', error_description: 'Invalid authorization code' },
         { status: 400 }
       );
     }
-  } catch (error) {
-    console.error('Token exchange error:', error);
+  } catch (requestError) {
+    console.error('Token exchange error:', requestError);
     return NextResponse.json(
       { error: 'server_error' },
       { status: 500 }

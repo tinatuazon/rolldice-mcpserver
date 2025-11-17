@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { OAuth2Client } from 'google-auth-library';
 
+const baseUrl = process.env.VERCEL_URL 
+  ? `https://${process.env.VERCEL_URL}` 
+  : process.env.NODE_ENV === 'production' 
+    ? 'https://your-app.vercel.app'
+    : 'http://localhost:3000';
+
 const client = new OAuth2Client(
   process.env.GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
-  `${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'}/api/auth/callback`
+  `${baseUrl}/api/auth/callback`
 );
 
 export async function GET(request: NextRequest) {
